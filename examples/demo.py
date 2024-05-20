@@ -3,12 +3,14 @@
 from openai import OpenAI
 
 # gets API Key from environment variable OPENAI_API_KEY
-client = OpenAI()
+client = OpenAI(base_url="http://localhost:7331", api_key="cortex")
 
+model = "TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF"
+client.models.start(model=model)
 # Non-streaming:
 print("----- standard request -----")
 completion = client.chat.completions.create(
-    model="gpt-4",
+    model=model,
     messages=[
         {
             "role": "user",
@@ -21,7 +23,7 @@ print(completion.choices[0].message.content)
 # Streaming:
 print("----- streaming request -----")
 stream = client.chat.completions.create(
-    model="gpt-4",
+    model=model,
     messages=[
         {
             "role": "user",
@@ -40,7 +42,7 @@ print()
 # Response headers:
 print("----- custom response headers test -----")
 response = client.chat.completions.with_raw_response.create(
-    model="gpt-4",
+    model=model,
     messages=[
         {
             "role": "user",

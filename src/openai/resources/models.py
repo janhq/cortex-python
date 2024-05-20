@@ -120,6 +120,38 @@ class Models(SyncAPIResource):
             ),
             cast_to=ModelDeleted,
         )
+    
+    def start(
+        self,
+        model: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Model:
+        """Start a model.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not model:
+            raise ValueError(f"Expected a non-empty value for `model` but received {model!r}")
+        return self._delete(
+            f"/models/{model}/start",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Model,
+        )
 
 
 class AsyncModels(AsyncAPIResource):
